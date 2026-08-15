@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>mountRoles rebuild test</title>
+<style>body{background:#0d0e13;padding:30px;font-family:monospace;color:#8b93a7}[data-composer-card]{width:640px;height:120px;border:1px solid #333;border-radius:14px;display:flex;align-items:center;padding:0 16px}.dsh-role-flow-a,.dsh-role-flow-b{position:absolute;width:40px;height:4px;background:#22d3ee}</style>
+</head>
+<body>
+<div id="log"></div>
+<div id="host"></div>
+<script>
+  function log(msg){ var d=document.getElementById('log'); d.textContent += msg + '\n' }
+  function buildCard(){ var c=document.createElement('div'); c.setAttribute('data-composer-card',''); c.textContent='composer'; document.getElementById('host').appendChild(c); return c }
+  buildCard()
+
+  // ---- 与 client.js 相同逻辑:mountRoles + MutationObserver ----
+  function mountRoles() {
+    try {
+      const card = document.querySelector('[data-composer-card]')
+      if (!card) return false
+      if (card.querySelector('.dsh-role-flow-a') && card.querySelector('.dsh-role-flow-b')) return true
+      card.querySelectorAll('.dsh-role-flow-a,.dsh-role-flow-b').forEach((el) => el.remove())
+      const a = document.createElement('span'); a.className='dsh-role-flow-a'; card.appendChild(a)
+      const b = document.createElement('span'); b.className='dsh-role-flow-b'; card.appendChild(b)
+      return true
+    } catch(e){ log('ERR '+e.message); return false }
+  }
+  let obs=null, debounce=0
+  function startObserver(){
+    if (obs) return
+    obs = new MutationObserver(function(){
+      clearTimeout(debounce)
+      debounce = setTimeout(function(){ mountRoles() }, 300)
+    })
+    obs.observe(document.body, { childList:true, subtree:true })
+  }
+  // 初始轮询
+  let tries=0
+  var timer=setInterval(function(){
+    if (mountRoles() || tries>60) clearInterval(timer)
+    tries++
+  }, 200)
+  var ready=setInterval(function(){
+    if (document.querySelector('[data-composer-card]')){ startObserver(); clearInterval(ready); log('observer started') }
+  }, 200)
+
+  // ---- 模拟 React 重建:2s 后清空卡片并重建(丢失注入的 span) ----
+  setTimeout(function(){
+    var host=document.getElementById('host')
+    host.innerHTML=''
+    buildCard()
+    log('t=2s card rebuilt (spans lost)')
+  }, 2000)
+  // ---- 验证:4s 时检查 span 是否被 observer 自动补回 ----
+  setTimeout(function(){
+    var card=document.querySelector('[data-composer-card]')
+    var hasA=!!card.querySelector('.dsh-role-flow-a')
+    var hasB=!!card.querySelector('.dsh-role-flow-b')
+    log('t=4s auto-reinject: ' + (hasA&&hasB ? 'OK (both spans back)' : 'MISSING'))
+  }, 4000)
+</script>
+</body>
+</html>
