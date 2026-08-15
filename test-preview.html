@@ -122,37 +122,36 @@ body[data-input-skin="on"] [data-composer-card]::before{
 }
 .dsh-role-flow-a{animation:dsh-flow-path 16s linear infinite,dsh-seg-color 4s linear infinite,dsh-flow-breathe 2.4s ease-in-out infinite;}
 .dsh-role-flow-b{animation:dsh-flow-path 16s linear infinite reverse,dsh-seg-color 4s linear infinite,dsh-flow-breathe 2.4s ease-in-out infinite;}
-/* ===== 发送/停止按钮:outer-cont 胶囊(精确匹配) ===== */
+/* ===== 发送/停止按钮:彩渐变图标按钮(照片风格,只要图标) ===== */
 [data-composer-card] button:is(
   [aria-label="发送消息"],[aria-label="发送"],[aria-label="Send message"],[aria-label="Send"],
   [aria-label="停止"],[aria-label="停止生成"],[aria-label="Stop"],[aria-label="Stop generating"]
 ){
   cursor:pointer;
-  padding:12px 20px;
+  padding:9px;
   border:none;
-  font-size:1rem;
-  margin-top:3px;
-  border-radius:16px;
-  background:radial-gradient(circle 80px at 80% -10%,#ffffff,#181b1b);
+  border-radius:12px;
+  background:
+    linear-gradient(180deg,#0d0d10 0%,#0d0d10 42%,rgba(13,13,16,.55) 62%,rgba(13,13,16,0) 100%),
+    linear-gradient(90deg,#0fb9a8,#d63384,#3730a3);
   position:relative;
   display:flex;
   align-items:center;
-  gap:5px;
-  color:#2a2f38;
-  transition:filter .15s,background .15s,opacity .15s;
+  justify-content:center;
+  color:#fff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 2px 8px rgba(0,0,0,.25);
+  transition:filter .15s,opacity .15s;
 }
+[data-composer-card] button:is([aria-label="发送消息"],[aria-label="停止"]):disabled{opacity:.45;cursor:default;}
+[data-composer-card] button:is([aria-label="发送消息"],[aria-label="停止"]):hover:not(:disabled){filter:brightness(1.08);}
+[data-composer-card] button:is([aria-label="发送消息"],[aria-label="停止"]):active:not(:disabled){filter:brightness(.9);}
 [data-composer-card] button:is([aria-label="发送消息"],[aria-label="停止"]) svg{display:none;}
 [data-composer-card] button:is([aria-label="发送消息"],[aria-label="停止"])::before{
   content:"";
-  width:16px;height:16px;flex:none;
+  width:16px;height:16px;
   background:currentColor;
-  -webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z"/></svg>') center/contain no-repeat;
-  mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z"/></svg>') center/contain no-repeat;
-}
-[data-composer-card] button:is([aria-label="发送消息"],[aria-label="停止"])::after{
-  content:attr(aria-label);
-  font-weight:500;
-  line-height:1;
+  -webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M12 3l1.9 6.1L20 11l-6.1 1.9L12 19l-1.9-6.1L4 11l6.1-1.9z"/><path fill="black" d="M19.5 16.5l.6 1.9 1.9.6-1.9.6-.6 1.9-.6-1.9-1.9-.6 1.9-.6z"/></svg>') center/contain no-repeat;
+  mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M12 3l1.9 6.1L20 11l-6.1 1.9L12 19l-1.9-6.1L4 11l6.1-1.9z"/><path fill="black" d="M19.5 16.5l.6 1.9 1.9.6-1.9.6-.6 1.9-.6-1.9-1.9-.6 1.9-.6z"/></svg>') center/contain no-repeat;
 }
 </style>
 </head>
