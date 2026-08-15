@@ -122,13 +122,26 @@ body[data-input-skin="on"] [data-composer-card]::before{
 }
 .dsh-role-flow-a{animation:dsh-flow-path 16s linear infinite,dsh-seg-color 4s linear infinite,dsh-flow-breathe 2.4s ease-in-out infinite;}
 .dsh-role-flow-b{animation:dsh-flow-path 16s linear infinite reverse,dsh-seg-color 4s linear infinite,dsh-flow-breathe 2.4s ease-in-out infinite;}
+/* ===== 发送/停止按钮:径向渐变圆角 ===== */
+[data-composer-card] button{
+  cursor:pointer;
+  font-size:1.4rem;
+  border-radius:16px;
+  border:none;
+  padding:2px;
+  background:radial-gradient(circle 80px at 80% -10%,#ffffff,#181b1b);
+  position:relative;
+}
+[data-composer-card] button svg{color:#2a2f38;}
 </style>
 </head>
 <body data-input-skin="on" style="background:#0d0e13;padding:48px;font-family:sans-serif">
-<div data-composer-card style="width:680px;height:140px;display:flex;align-items:center;padding:0 16px;">
+<div data-composer-card style="width:680px;height:140px;display:flex;align-items:center;gap:10px;padding:0 16px;">
   <span class="dsh-role-flow-a"></span>
   <span class="dsh-role-flow-b"></span>
-  <span style="color:#8b93a7;font-size:14px">输入消息…</span>
+  <span style="color:#8b93a7;font-size:14px;flex:1">输入消息…</span>
+  <button type="button" aria-label="停止" title="停止"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="3" width="10" height="10" rx="1.5"/></svg></button>
+  <button type="button" aria-label="发送" title="发送"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8L14 2L8 14L6.8 9.2L2 8Z" fill="currentColor"/></svg></button>
 </div>
 </body>
 </html>
