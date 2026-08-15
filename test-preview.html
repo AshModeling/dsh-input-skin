@@ -4,22 +4,44 @@
 <meta charset="utf-8">
 <title>dsh-input-skin preview</title>
 <style>
-/* ===== 内部:双光束向两侧扩散(6s) + 青紫×2→红蓝×2 大周期配色(24s) ===== */
-@property --dsh-beam-l{syntax:'<color>';inherits:false;initial-value:rgba(34,211,238,.6);}
-@property --dsh-beam-r{syntax:'<color>';inherits:false;initial-value:rgba(139,92,246,.6);}
-@keyframes dsh-input-skin-flow{
+
+/* ============================================================
+ * ★ 调参区 ★ —— 只改下面这些值，改完 Ctrl+F5 刷新生效
+ * ============================================================ */
+body[data-input-skin="on"]{
+  /* ---------- 内部光束(输入框内部左右两条光) ---------- */
+  --lt-beam-l:#22d3ee;   /* 左束颜色(默认青) */
+  --lt-beam-r:#8b5cf6;   /* 右束颜色(默认紫) */
+  --lt-beam-l2:#ff4d6d;  /* 大周期第二组·左束颜色(默认红) */
+  --lt-beam-r2:#3b82f6;  /* 大周期第二组·右束颜色(默认蓝) */
+  --lt-beam-flow:6s;     /* 光束扩散一个来回的时长(越小越快) */
+  --lt-beam-cycle:24s;   /* 配色大周期时长(第一组×2轮→第二组×2轮) */
+  --lt-beam-width:50%;   /* 光束宽度(占输入框宽度百分比) */
+
+  /* ---------- 外部流动(边框上巡游的线段光) ---------- */
+  --lt-seg-c1:#12b6d6;   /* 线段颜色①(默认深青) */
+  --lt-seg-c2:#2d6cf0;   /* 线段颜色②(默认蓝) */
+  --lt-seg-c3:#9333ea;   /* 线段颜色③(默认紫) */
+  --lt-seg-color:4s;     /* 线段颜色循环一圈时长(越小越快) */
+  --lt-seg-lap:16s;      /* 线段绕边框一整圈时长(越小越快) */
+  --lt-seg-len:40px;     /* 线段长度(改这里,路径自动跟随) */
+
+  /* ---------- 呼吸 ---------- */
+  --lt-breathe:2.4s;     /* 线段呼吸脉动时长 */
+}
+
+/* ===== 内部:双光束向两侧扩散 + 青紫×2→红蓝×2 大周期配色 ===== */
+@property --dsh-beam-l{syntax:'<color>';inherits:false;initial-value:#22d3ee;}
+@property --dsh-beam-r{syntax:'<color>';inherits:false;initial-value:#8b5cf6;}
+@keyframes dsh-light-theater-flow{
   0%{background-position:50% 50%,50% 50%,50% 50%,0 0;}
   50%{background-position:50% 50%,0% 50%,100% 50%,0 0;}
   100%{background-position:50% 50%,50% 50%,50% 50%,0 0;}
 }
 @keyframes dsh-beam-color{
-  0%{--dsh-beam-l:rgba(34,211,238,.6);--dsh-beam-r:rgba(139,92,246,.6);}
-  25%{--dsh-beam-l:rgba(34,211,238,.6);--dsh-beam-r:rgba(139,92,246,.6);}
-  49%{--dsh-beam-l:rgba(34,211,238,.6);--dsh-beam-r:rgba(139,92,246,.6);}
-  51%{--dsh-beam-l:rgba(255,77,109,.6);--dsh-beam-r:rgba(59,130,246,.6);}
-  75%{--dsh-beam-l:rgba(255,77,109,.6);--dsh-beam-r:rgba(59,130,246,.6);}
-  99%{--dsh-beam-l:rgba(255,77,109,.6);--dsh-beam-r:rgba(59,130,246,.6);}
-  100%{--dsh-beam-l:rgba(34,211,238,.6);--dsh-beam-r:rgba(139,92,246,.6);}
+  0%,25%,49%{--dsh-beam-l:var(--lt-beam-l);--dsh-beam-r:var(--lt-beam-r);}
+  51%,75%,99%{--dsh-beam-l:var(--lt-beam-l2);--dsh-beam-r:var(--lt-beam-r2);}
+  100%{--dsh-beam-l:var(--lt-beam-l);--dsh-beam-r:var(--lt-beam-r);}
 }
 body[data-input-skin="on"] [data-composer-card]{
   position:relative;
@@ -33,28 +55,31 @@ body[data-input-skin="on"] [data-composer-card]{
       rgba(255,255,255,0) 100%),
     linear-gradient(90deg,
       rgba(255,255,255,0) 0%,
-      color-mix(in srgb,var(--dsh-beam-l) 55%,transparent) 25%,
-      var(--dsh-beam-l) 50%,
-      color-mix(in srgb,var(--dsh-beam-l) 55%,transparent) 75%,
+      color-mix(in srgb,var(--dsh-beam-l) 33%,transparent) 25%,
+      color-mix(in srgb,var(--dsh-beam-l) 60%,transparent) 50%,
+      color-mix(in srgb,var(--dsh-beam-l) 33%,transparent) 75%,
       rgba(255,255,255,0) 100%),
     linear-gradient(90deg,
       rgba(255,255,255,0) 0%,
-      color-mix(in srgb,var(--dsh-beam-r) 55%,transparent) 25%,
-      var(--dsh-beam-r) 50%,
-      color-mix(in srgb,var(--dsh-beam-r) 55%,transparent) 75%,
+      color-mix(in srgb,var(--dsh-beam-r) 33%,transparent) 25%,
+      color-mix(in srgb,var(--dsh-beam-r) 60%,transparent) 50%,
+      color-mix(in srgb,var(--dsh-beam-r) 33%,transparent) 75%,
       rgba(255,255,255,0) 100%),
-    linear-gradient(180deg,#1a1b26,#15151a);
-  background-size:24% 100%,50% 100%,50% 100%,auto;
+    linear-gradient(180deg,
+      color-mix(in srgb,var(--dsw-alias-bg-layer-2,#10101a) 60%,#ffffff 40%),
+      color-mix(in srgb,var(--dsw-alias-bg-layer-1,#15151a) 85%,#000000 15%),
+      var(--dsw-alias-bg-layer-1,#15151a));
+  background-size:24% 100%,var(--lt-beam-width) 100%,var(--lt-beam-width) 100%,auto;
   background-position:50% 50%,50% 50%,50% 50%,0 0;
   background-repeat:no-repeat,no-repeat,no-repeat,repeat;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.08),
     inset 0 -1px 0 rgba(0,0,0,.14),
-    inset 0 0 0 1px rgba(233,238,249,.07),
+    inset 0 0 0 1px color-mix(in srgb,var(--dsw-alias-label-primary,#e9eef9) 7%,transparent),
     0 2px 10px rgba(0,0,0,.3);
   animation:
-    dsh-input-skin-flow 6s ease-in-out infinite,
-    dsh-beam-color 24s linear infinite;
+    dsh-light-theater-flow var(--lt-beam-flow) ease-in-out infinite,
+    dsh-beam-color var(--lt-beam-cycle) linear infinite;
 }
 body[data-input-skin="on"] [data-composer-card]::before{
   content:'';
@@ -62,68 +87,68 @@ body[data-input-skin="on"] [data-composer-card]::before{
   inset:1px;
   border-radius:13px;
   box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.1),
-    inset 0 0 6px rgba(255,255,255,.05);
+    inset 0 0 0 1px color-mix(in srgb,#ffffff 10%,transparent),
+    inset 0 0 6px color-mix(in srgb,#ffffff 5%,transparent);
   pointer-events:none;
   z-index:1;
 }
 /* ===== 两段线段光:顶部中间出发,沿边框圆角弧线平滑绕行(16s),颜色循环(4s) ===== */
 @property --dsh-seg-c{syntax:'<color>';inherits:false;initial-value:#12b6d6;}
 @keyframes dsh-seg-color{
-  0%{--dsh-seg-c:#12b6d6;}
-  33.333%{--dsh-seg-c:#2d6cf0;}
-  66.667%{--dsh-seg-c:#9333ea;}
-  100%{--dsh-seg-c:#12b6d6;}
+  0%{--dsh-seg-c:var(--lt-seg-c1);}
+  33.333%{--dsh-seg-c:var(--lt-seg-c2);}
+  66.667%{--dsh-seg-c:var(--lt-seg-c3);}
+  100%{--dsh-seg-c:var(--lt-seg-c1);}
 }
 @keyframes dsh-flow-path{
-  0%{left:calc(50% - 20px);top:-2px;transform:rotate(540deg);}
-  3.125%{left:calc(42.083% - 20px);top:-2px;transform:rotate(540deg);}
-  6.25%{left:calc(34.167% - 20px);top:-2px;transform:rotate(540deg);}
-  9.375%{left:calc(26.25% - 20px);top:-2px;transform:rotate(540deg);}
-  12.5%{left:calc(18.333% - 20px);top:-2px;transform:rotate(540deg);}
-  15.625%{left:calc(10.417% - 20px);top:-2px;transform:rotate(540deg);}
-  18.75%{left:calc(2.5% - 20px);top:-2px;transform:rotate(540deg);}
-  21.875%{left:calc(0.73% - 20px);top:calc(0.73% - 2px);transform:rotate(585deg);}
+  0%{left:calc(50% - var(--lt-seg-len) / 2);top:-2px;transform:rotate(540deg);}
+  3.125%{left:calc(42.083% - var(--lt-seg-len) / 2);top:-2px;transform:rotate(540deg);}
+  6.25%{left:calc(34.167% - var(--lt-seg-len) / 2);top:-2px;transform:rotate(540deg);}
+  9.375%{left:calc(26.25% - var(--lt-seg-len) / 2);top:-2px;transform:rotate(540deg);}
+  12.5%{left:calc(18.333% - var(--lt-seg-len) / 2);top:-2px;transform:rotate(540deg);}
+  15.625%{left:calc(10.417% - var(--lt-seg-len) / 2);top:-2px;transform:rotate(540deg);}
+  18.75%{left:calc(2.5% - var(--lt-seg-len) / 2);top:-2px;transform:rotate(540deg);}
+  21.875%{left:calc(0.73% - var(--lt-seg-len) / 2);top:calc(0.73% - 2px);transform:rotate(585deg);}
   25%{left:-20px;top:calc(2.5% - 2px);transform:rotate(630deg);}
   28.125%{left:-20px;top:calc(50% - 2px);transform:rotate(630deg);}
   31.25%{left:-20px;top:calc(97.5% - 2px);transform:rotate(630deg);}
-  34.375%{left:calc(0.73% - 20px);top:calc(99.27% - 2px);transform:rotate(675deg);}
-  37.5%{left:calc(2.5% - 20px);top:calc(100% - 2px);transform:rotate(720deg);}
-  40.625%{left:calc(14.375% - 20px);top:calc(100% - 2px);transform:rotate(720deg);}
-  43.75%{left:calc(26.25% - 20px);top:calc(100% - 2px);transform:rotate(720deg);}
-  46.875%{left:calc(38.125% - 20px);top:calc(100% - 2px);transform:rotate(720deg);}
-  50%{left:calc(50% - 20px);top:calc(100% - 2px);transform:rotate(720deg);}
-  53.125%{left:calc(61.875% - 20px);top:calc(100% - 2px);transform:rotate(720deg);}
-  56.25%{left:calc(73.75% - 20px);top:calc(100% - 2px);transform:rotate(720deg);}
-  59.375%{left:calc(85.625% - 20px);top:calc(100% - 2px);transform:rotate(720deg);}
-  62.5%{left:calc(97.5% - 20px);top:calc(100% - 2px);transform:rotate(720deg);}
-  65.625%{left:calc(99.27% - 20px);top:calc(99.27% - 2px);transform:rotate(765deg);}
-  68.75%{left:calc(100% - 20px);top:calc(97.5% - 2px);transform:rotate(810deg);}
-  71.875%{left:calc(100% - 20px);top:calc(50% - 2px);transform:rotate(810deg);}
-  75%{left:calc(100% - 20px);top:calc(2.5% - 2px);transform:rotate(810deg);}
-  78.125%{left:calc(99.27% - 20px);top:calc(0.73% - 2px);transform:rotate(855deg);}
-  81.25%{left:calc(97.5% - 20px);top:-2px;transform:rotate(900deg);}
-  84.375%{left:calc(89.583% - 20px);top:-2px;transform:rotate(900deg);}
-  87.5%{left:calc(81.667% - 20px);top:-2px;transform:rotate(900deg);}
-  90.625%{left:calc(73.75% - 20px);top:-2px;transform:rotate(900deg);}
-  93.75%{left:calc(65.833% - 20px);top:-2px;transform:rotate(900deg);}
-  96.875%{left:calc(57.917% - 20px);top:-2px;transform:rotate(900deg);}
-  100%{left:calc(50% - 20px);top:-2px;transform:rotate(900deg);}
+  34.375%{left:calc(0.73% - var(--lt-seg-len) / 2);top:calc(99.27% - 2px);transform:rotate(675deg);}
+  37.5%{left:calc(2.5% - var(--lt-seg-len) / 2);top:calc(100% - 2px);transform:rotate(720deg);}
+  40.625%{left:calc(14.375% - var(--lt-seg-len) / 2);top:calc(100% - 2px);transform:rotate(720deg);}
+  43.75%{left:calc(26.25% - var(--lt-seg-len) / 2);top:calc(100% - 2px);transform:rotate(720deg);}
+  46.875%{left:calc(38.125% - var(--lt-seg-len) / 2);top:calc(100% - 2px);transform:rotate(720deg);}
+  50%{left:calc(50% - var(--lt-seg-len) / 2);top:calc(100% - 2px);transform:rotate(720deg);}
+  53.125%{left:calc(61.875% - var(--lt-seg-len) / 2);top:calc(100% - 2px);transform:rotate(720deg);}
+  56.25%{left:calc(73.75% - var(--lt-seg-len) / 2);top:calc(100% - 2px);transform:rotate(720deg);}
+  59.375%{left:calc(85.625% - var(--lt-seg-len) / 2);top:calc(100% - 2px);transform:rotate(720deg);}
+  62.5%{left:calc(97.5% - var(--lt-seg-len) / 2);top:calc(100% - 2px);transform:rotate(720deg);}
+  65.625%{left:calc(99.27% - var(--lt-seg-len) / 2);top:calc(99.27% - 2px);transform:rotate(765deg);}
+  68.75%{left:calc(100% - var(--lt-seg-len) / 2);top:calc(97.5% - 2px);transform:rotate(810deg);}
+  71.875%{left:calc(100% - var(--lt-seg-len) / 2);top:calc(50% - 2px);transform:rotate(810deg);}
+  75%{left:calc(100% - var(--lt-seg-len) / 2);top:calc(2.5% - 2px);transform:rotate(810deg);}
+  78.125%{left:calc(99.27% - var(--lt-seg-len) / 2);top:calc(0.73% - 2px);transform:rotate(855deg);}
+  81.25%{left:calc(97.5% - var(--lt-seg-len) / 2);top:-2px;transform:rotate(900deg);}
+  84.375%{left:calc(89.583% - var(--lt-seg-len) / 2);top:-2px;transform:rotate(900deg);}
+  87.5%{left:calc(81.667% - var(--lt-seg-len) / 2);top:-2px;transform:rotate(900deg);}
+  90.625%{left:calc(73.75% - var(--lt-seg-len) / 2);top:-2px;transform:rotate(900deg);}
+  93.75%{left:calc(65.833% - var(--lt-seg-len) / 2);top:-2px;transform:rotate(900deg);}
+  96.875%{left:calc(57.917% - var(--lt-seg-len) / 2);top:-2px;transform:rotate(900deg);}
+  100%{left:calc(50% - var(--lt-seg-len) / 2);top:-2px;transform:rotate(900deg);}
 }
 @keyframes dsh-flow-breathe{
   0%,100%{opacity:.6;filter:brightness(.9);}
   50%{opacity:1;filter:brightness(1.25);}
 }
 .dsh-role-flow-a,.dsh-role-flow-b{
-  position:absolute;width:40px;height:4px;border-radius:2px;
+  position:absolute;width:var(--lt-seg-len);height:4px;border-radius:2px;
   pointer-events:none;z-index:6;
   background:linear-gradient(90deg,color-mix(in srgb,var(--dsh-seg-c,#12b6d6) 20%,transparent),var(--dsh-seg-c,#12b6d6) 38%,#fff 50%,var(--dsh-seg-c,#12b6d6) 62%,color-mix(in srgb,var(--dsh-seg-c,#12b6d6) 20%,transparent));
   box-shadow:0 0 9px 3px color-mix(in srgb,var(--dsh-seg-c,#12b6d6) 70%,transparent);
 }
-.dsh-role-flow-a{animation:dsh-flow-path 16s linear infinite,dsh-seg-color 4s linear infinite,dsh-flow-breathe 2.4s ease-in-out infinite;}
-.dsh-role-flow-b{animation:dsh-flow-path 16s linear infinite reverse,dsh-seg-color 4s linear infinite,dsh-flow-breathe 2.4s ease-in-out infinite;}
-/* ===== 发送/停止按钮:彩渐变图标按钮(照片风格,只要图标) ===== */
-[data-composer-card] button:is(
+.dsh-role-flow-a{animation:dsh-flow-path var(--lt-seg-lap) linear infinite,dsh-seg-color var(--lt-seg-color) linear infinite,dsh-flow-breathe var(--lt-breathe) ease-in-out infinite;}
+.dsh-role-flow-b{animation:dsh-flow-path var(--lt-seg-lap) linear infinite reverse,dsh-seg-color var(--lt-seg-color) linear infinite,dsh-flow-breathe var(--lt-breathe) ease-in-out infinite;}
+/* ===== 发送/停止按钮:彩渐变图标按钮(照片风格,只要图标不要文字) ===== */
+body[data-input-skin="on"] [data-composer-card] button:is(
   [aria-label="发送消息"],[aria-label="发送"],[aria-label="Send message"],[aria-label="Send"],
   [aria-label="停止"],[aria-label="停止生成"],[aria-label="Stop"],[aria-label="Stop generating"]
 ){
@@ -147,11 +172,33 @@ body[data-input-skin="on"] [data-composer-card]::before{
   box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 2px 8px rgba(0,0,0,.25);
   transition:filter .15s,opacity .15s;
 }
-[data-composer-card] button:is([aria-label="发送消息"],[aria-label="停止"]):disabled{cursor:default;opacity:1;}
-[data-composer-card] button:is([aria-label="发送消息"],[aria-label="停止"]):hover:not(:disabled){filter:brightness(1.08);}
-[data-composer-card] button:is([aria-label="发送消息"],[aria-label="停止"]):active:not(:disabled){filter:brightness(.9);}
-[data-composer-card] button:is([aria-label="发送消息"],[aria-label="停止"]) svg{display:none;}
-[data-composer-card] button:is([aria-label="发送消息"],[aria-label="停止"])::before{
+body[data-input-skin="on"] [data-composer-card] button:is(
+  [aria-label="发送消息"],[aria-label="发送"],[aria-label="Send message"],[aria-label="Send"],
+  [aria-label="停止"],[aria-label="停止生成"],[aria-label="Stop"],[aria-label="Stop generating"]
+):disabled{
+  cursor:default;
+  opacity:1;
+}
+body[data-input-skin="on"] [data-composer-card] button:is(
+  [aria-label="发送消息"],[aria-label="发送"],[aria-label="Send message"],[aria-label="Send"],
+  [aria-label="停止"],[aria-label="停止生成"],[aria-label="Stop"],[aria-label="Stop generating"]
+):hover:not(:disabled){
+  filter:brightness(1.08);
+}
+body[data-input-skin="on"] [data-composer-card] button:is(
+  [aria-label="发送消息"],[aria-label="发送"],[aria-label="Send message"],[aria-label="Send"],
+  [aria-label="停止"],[aria-label="停止生成"],[aria-label="Stop"],[aria-label="Stop generating"]
+):active:not(:disabled){
+  filter:brightness(.9);
+}
+body[data-input-skin="on"] [data-composer-card] button:is(
+  [aria-label="发送消息"],[aria-label="发送"],[aria-label="Send message"],[aria-label="Send"],
+  [aria-label="停止"],[aria-label="停止生成"],[aria-label="Stop"],[aria-label="Stop generating"]
+) svg{display:none;}
+body[data-input-skin="on"] [data-composer-card] button:is(
+  [aria-label="发送消息"],[aria-label="发送"],[aria-label="Send message"],[aria-label="Send"],
+  [aria-label="停止"],[aria-label="停止生成"],[aria-label="Stop"],[aria-label="Stop generating"]
+)::before{
   content:"";
   width:16px;height:16px;
   background:currentColor;
