@@ -1,5 +1,5 @@
 {
-  "name": "@linxin666/dsh-input-skin",
+  "name": "@linxin666/dsh-light-theater",
   "version": "0.1.0",
   "description": "DSH 输入框皮肤插件：跟随皮肤主题美化输入框——内部青/紫双光束向两侧扩散巡视（24s 大周期切换红蓝）、顶部两段线段光沿边框圆角弧线反向巡游（16s 一圈）、青→蓝→紫颜色循环（4s）。",
   "type": "module",
@@ -20,9 +20,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AshModeling/dsh-input-skin.git"
+    "url": "git+https://github.com/AshModeling/dsh-light-theater.git"
   },
-  "homepage": "https://github.com/AshModeling/dsh-input-skin",
+  "homepage": "https://github.com/AshModeling/dsh-light-theater",
   "dsh": {
     "client": {
       "inject": [

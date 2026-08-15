@@ -1,5 +1,5 @@
-# dsh-input-skin: 输入框皮肤(跟随皮肤主题)
+# dsh-light-theater: 输入框皮肤(跟随皮肤主题)
 # 在 设置→通用 增加"输入框皮肤"开关,美化输入框(圆角/渐变光晕/聚焦发光)。
 - insert:
-    - id: dsh-input-skin
-      name: '@linxin666/dsh-input-skin'
+    - id: dsh-light-theater
+      name: '@linxin666/dsh-light-theater'

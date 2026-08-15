@@ -1,4 +1,4 @@
-# dsh-input-skin · DSH 输入框皮肤
+# dsh-light-theater · DSH 输入框皮肤
 
 > DeepSeek Harness (DSH) Web UI 输入框皮肤插件：跟随当前皮肤主题，给输入框加一套「科技风灯光剧场」。
 
@@ -24,7 +24,7 @@
 DSH 插件通过 `pnpm add link:<本地路径>` + `cordis.patch.yml` 挂载（参考 [DSH 插件开发文档](https://github.com/deepseek-ai/deepseek-harness)）。
 
 ```bash
-# 1. 克隆 / 下载本仓库到本地（如 ~/dsh-plugins/dsh-input-skin）
+# 1. 克隆 / 下载本仓库到本地（如 ~/dsh-plugins/dsh-light-theater）
 
 # 2. 在 DSH web 插件目录安装
 cd <dsh-web 目录>
@@ -35,8 +35,8 @@ pnpm add link:<本仓库路径>
 
 ```yaml
 - insert:
-    - id: dsh-input-skin
-      name: '@linxin666/dsh-input-skin'
+    - id: dsh-light-theater
+      name: '@linxin666/dsh-light-theater'
 ```
 
 重启 DSH web，进入 **设置 → 通用 → 输入框皮肤** 开启即可。
@@ -60,7 +60,7 @@ pnpm add link:<本仓库路径>
 ## 🗂️ 目录结构
 
 ```
-dsh-input-skin/
+dsh-light-theater/
 ├── lib/
 │   ├── index.js        # host 半区（最小实现）
 │   └── client.js       # 全部 CSS 动画 + 设置开关注入
