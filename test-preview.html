@@ -122,8 +122,11 @@ body[data-input-skin="on"] [data-composer-card]::before{
 }
 .dsh-role-flow-a{animation:dsh-flow-path 16s linear infinite,dsh-seg-color 4s linear infinite,dsh-flow-breathe 2.4s ease-in-out infinite;}
 .dsh-role-flow-b{animation:dsh-flow-path 16s linear infinite reverse,dsh-seg-color 4s linear infinite,dsh-flow-breathe 2.4s ease-in-out infinite;}
-/* ===== 发送/停止按钮:outer-cont 胶囊 + 图标 + 文字 ===== */
-[data-composer-card] button{
+/* ===== 发送/停止按钮:outer-cont 胶囊(精确匹配) ===== */
+[data-composer-card] button:is(
+  [aria-label="发送消息"],[aria-label="发送"],[aria-label="Send message"],[aria-label="Send"],
+  [aria-label="停止"],[aria-label="停止生成"],[aria-label="Stop"],[aria-label="Stop generating"]
+){
   cursor:pointer;
   padding:12px 20px;
   border:none;
@@ -136,16 +139,17 @@ body[data-input-skin="on"] [data-composer-card]::before{
   align-items:center;
   gap:5px;
   color:#2a2f38;
+  transition:filter .15s,background .15s,opacity .15s;
 }
-[data-composer-card] button svg{display:none;}
-[data-composer-card] button::before{
+[data-composer-card] button:is([aria-label="发送消息"],[aria-label="停止"]) svg{display:none;}
+[data-composer-card] button:is([aria-label="发送消息"],[aria-label="停止"])::before{
   content:"";
   width:16px;height:16px;flex:none;
   background:currentColor;
   -webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z"/></svg>') center/contain no-repeat;
   mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z"/></svg>') center/contain no-repeat;
 }
-[data-composer-card] button::after{
+[data-composer-card] button:is([aria-label="发送消息"],[aria-label="停止"])::after{
   content:attr(aria-label);
   font-weight:500;
   line-height:1;
@@ -158,7 +162,7 @@ body[data-input-skin="on"] [data-composer-card]::before{
   <span class="dsh-role-flow-b"></span>
   <span style="color:#8b93a7;font-size:14px;flex:1">输入消息…</span>
   <button type="button" aria-label="停止" title="停止"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="3" width="10" height="10" rx="1.5"/></svg></button>
-  <button type="button" aria-label="发送" title="发送"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8L14 2L8 14L6.8 9.2L2 8Z" fill="currentColor"/></svg></button>
+  <button type="button" aria-label="发送消息" title="发送消息" disabled><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8L14 2L8 14L6.8 9.2L2 8Z" fill="currentColor"/></svg></button>
 </div>
 </body>
 </html>
