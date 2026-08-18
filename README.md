@@ -36,7 +36,7 @@ pnpm add link:<本仓库路径>
 ```yaml
 - insert:
     - id: dsh-light-theater
-      name: '@linxin666/dsh-light-theater'
+      name: 'dsh-light-theater'
 ```
 
 重启 DSH web，进入 **设置 → 通用 → 输入框皮肤** 开启即可。

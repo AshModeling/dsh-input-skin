@@ -2,4 +2,4 @@
 # 在 设置→通用 增加"输入框皮肤"开关,美化输入框(圆角/渐变光晕/聚焦发光)。
 - insert:
     - id: dsh-light-theater
-      name: '@linxin666/dsh-light-theater'
+      name: 'dsh-light-theater'
