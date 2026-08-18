@@ -1,3 +1,6 @@
 node_modules/
 *.log
 .DS_Store
+# 本地截图与测试文件(不随插件发布)
+_s_*.png
+test-rebuild.html
