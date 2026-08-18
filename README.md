@@ -21,7 +21,17 @@
 
 ## 📦 安装
 
-DSH 插件通过 `pnpm add link:<本地路径>` + `cordis.patch.yml` 挂载（参考 [DSH 插件开发文档](https://github.com/deepseek-ai/deepseek-harness)）。
+**一键安装（推荐）：**
+
+```bash
+dsh plugin --profile web add dsh-light-theater
+```
+
+重启 DSH web，进入 **设置 → 通用 → 输入框皮肤** 开启即可。
+
+**本地开发 / 调试（源码方式）：**
+
+克隆本仓库后，通过 `pnpm add link:<本地路径>` + `cordis.patch.yml` 挂载（参考 [DSH 插件开发文档](https://github.com/deepseek-ai/deepseek-harness)）。
 
 ```bash
 # 1. 克隆 / 下载本仓库到本地（如 ~/dsh-plugins/dsh-light-theater）
