@@ -18,6 +18,11 @@
     "./client": "./lib/client.js",
     "./package.json": "./package.json"
   },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "docs"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AshModeling/dsh-light-theater.git"
