@@ -102,6 +102,32 @@ dsh-light-theater/
 - **颜色循环**：`@property` 注册 `<color>` 自定义属性 + `var()` 引用，颜色在渐变里平滑插值（避免 `hue-rotate` 滤镜动画在某些环境不推进的问题）。
 - **主题适配**：`color-mix(in srgb, var(--dsw-alias-*, #fallback) x%, ...)` 跟随 DSH 皮肤。
 
+## ✅ 前置要求
+
+- DeepSeek Harness (DSH) 已安装,Web UI 可用(`npx @deepseek-ai/dsh web`)
+- 目标 profile 为 **web**(`--profile web`)
+- 无额外依赖:纯 CSS 实现,不引入任何运行时库
+
+## 🔒 权限与数据
+
+- **零权限**:不请求系统权限、不读写文件、不访问网络
+- **零凭据**:不接触任何 token / 密钥
+- **数据只存本地**:开关与调参全部写入浏览器 `localStorage`(`dsh-light-theater:*` 键),不上传、不同步
+
+## ⚠️ 已知限制
+
+- 颜色通过 `color-mix` 跟随 DSH 皮肤主题变量(`--dsw-alias-*`);若某皮肤未定义这些变量,会回退到内置 fallback 色,观感略有差异
+- 依赖 `@property` 注册自定义属性,需较新的 Chromium 内核(Edge / Chrome 105+)
+- 仅作用于 Web UI 的输入框(composer),不涉及 TUI 等其它前端
+
+## 🔄 更新
+
+发布新版本后,重新执行安装命令即拉到最新版(或在 DSH Web UI **设置 → 插件** 中移除后重装):
+
+```bash
+dsh plugin --profile web add dsh-light-theater
+```
+
 ## 📄 License
 
 [MIT](LICENSE) © AshModeling
